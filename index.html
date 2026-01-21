@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nitro Giveaway</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+  <h1>🎁 Discord Nitro Giveaway</h1>
+  <p>One entry per IP address</p>
+
+  <input id="discord" placeholder="Discord username">
+  <button onclick="enter()">Enter</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+async function enter() {
+  const discord = document.getElementById("discord").value;
+  const msg = document.getElementById("msg");
+
+  const res = await fetch("/enter", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ discord })
+  });
+
+  const data = await res.json();
+  msg.textContent = data.message;
+  msg.style.color = data.ok ? "lime" : "red";
+}
+</script>
+
+</body>
+</html>
